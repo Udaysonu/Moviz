@@ -10,22 +10,26 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import kotlinx.android.synthetic.main.slide_item.view.*
 
-class slideAdapter(private val mcontext:Context, private val mlstSlides:ArrayList<slide>): RecyclerView.Adapter<slideAdapter.slideViewholder>() {
-     class slideViewholder(itemView: View) :RecyclerView.ViewHolder(itemView){
-     }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): slideViewholder {
-         val slideitem=LayoutInflater.from(parent.context).inflate(R.layout.slide_item,parent,false)
-        return slideViewholder(slideitem)
+class slideAdapter(private val mcontext:Context, private val mlstSlides:ArrayList<slide>): PagerAdapter() {
+    override fun isViewFromObject(view: View, `object`: Any): Boolean {
+        return view==`object`
         }
 
-    override fun getItemCount(): Int {
-      return  mlstSlides.size
+    override fun getCount(): Int {
+        return mlstSlides.size
+     }
+
+    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+        container.removeView(`object` as View)
     }
 
-    override fun onBindViewHolder(holder: slideViewholder, position: Int) {
-        holder.itemView.slide_img.setImageResource(mlstSlides[position].image)
-        holder.itemView.slide_text.text = mlstSlides[position].title
+    override fun instantiateItem(container: ViewGroup, position: Int): Any {
+        var inflater= mcontext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        var slideLayout=inflater.inflate(R.layout.slide_item,null)
+        slideLayout.slide_img.setImageResource(mlstSlides[position].image)
+        slideLayout.slide_text.text=mlstSlides[position].title
+        container.addView(slideLayout)
+        return slideLayout
     }
 
 }

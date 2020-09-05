@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     private var lstSlide=ArrayList<slide>()
@@ -17,10 +19,15 @@ class MainActivity : AppCompatActivity() {
         lstSlide.add(slide(R.drawable.uma,"Movie1"))
         lstSlide.add(slide(R.drawable.avatar,"Movie2"))
         var adaptr=slideAdapter(this,lstSlide)
-       val layoutmanager=LinearLayoutManager(this)
-        layoutmanager.orientation=LinearLayoutManager.HORIZONTAL
-        viewpager.layoutManager=layoutmanager
         viewpager.adapter=adaptr
+        indicator.setupWithViewPager(viewpager,true)
+    }
+    class slider : TimerTask() {
+
+        override fun run() {
+
+
+        }
 
     }
 }
