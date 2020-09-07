@@ -1,9 +1,13 @@
 package com.example.moviz
 
+import android.app.ActivityOptions
+import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -33,11 +37,23 @@ class MainActivity : AppCompatActivity() {
         lstMovies.add(Movie("Ra-1",R.drawable.js))
         lstMovies.add(Movie("Uma",R.drawable.avatar))
         lstMovies.add(Movie("Ra-1",R.drawable.js))
-        rv_movies.adapter=MovieAdapter(this,lstMovies)
+        rv_movies.adapter=MovieAdapter(this,lstMovies,this)
         val linearlayout=LinearLayoutManager(this)
         linearlayout.orientation=LinearLayoutManager.HORIZONTAL
         rv_movies.layoutManager=linearlayout
     }
+
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    fun onMovieclick(titl:String, thumb:Int, imageview:ImageView){
+        val intent= Intent(this,Movie_details::class.java)
+        intent.putExtra("MOV_TITLE",titl)
+        intent.putExtra("MOV_THUMB",thumb)
+        val options=ActivityOptions.makeSceneTransitionAnimation(this,imageview,"sharedName")
+        startActivity(intent,options.toBundle())
+    }
+
+
     class slider : TimerTask() {
 
         override fun run() {
