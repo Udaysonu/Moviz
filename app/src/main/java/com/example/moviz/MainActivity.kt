@@ -21,6 +21,22 @@ class MainActivity : AppCompatActivity() {
         var adaptr=slideAdapter(this,lstSlide)
         viewpager.adapter=adaptr
         indicator.setupWithViewPager(viewpager,true)
+
+
+        //RecyclerView setup
+        val lstMovies=ArrayList<Movie>()
+        lstMovies.add(Movie("Uma",R.drawable.avatar))
+        lstMovies.add(Movie("Ra-1",R.drawable.js))
+        lstMovies.add(Movie("Uma",R.drawable.avatar))
+        lstMovies.add(Movie("Ra-1",R.drawable.js))
+        lstMovies.add(Movie("Uma",R.drawable.avatar))
+        lstMovies.add(Movie("Ra-1",R.drawable.js))
+        lstMovies.add(Movie("Uma",R.drawable.avatar))
+        lstMovies.add(Movie("Ra-1",R.drawable.js))
+        rv_movies.adapter=MovieAdapter(this,lstMovies)
+        val linearlayout=LinearLayoutManager(this)
+        linearlayout.orientation=LinearLayoutManager.HORIZONTAL
+        rv_movies.layoutManager=linearlayout
     }
     class slider : TimerTask() {
 
