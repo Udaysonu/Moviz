@@ -12,7 +12,12 @@ import com.example.moviz.classes.Movie
 import com.example.moviz.R
 import com.example.moviz.adapter.MovieAdapter
 import com.example.moviz.adapter.slideAdapter
+import com.example.moviz.classes.Home_tab_fragment_adapter
+import com.example.moviz.classes.dataService
 import com.example.moviz.classes.slide
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.GRAVITY_FILL
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -30,12 +35,53 @@ class MainActivity : AppCompatActivity() {
         //more popular movies RecyclerView setup
         intiRV_pop_movies()
 
-        //initTabView()
+        //Init tab view
+        initTabView()
     }
 
+
+
+
+
+
+    private fun initTabView() {
+        // home_tab.setupWithViewPager(home_tab_viewpager)
+        val myAdapter=Home_tab_fragment_adapter(this,supportFragmentManager)
+        home_tab.addTab(home_tab.newTab().setText("Hollywood"))
+        home_tab.addTab(home_tab.newTab().setText("Bollywood"))
+        home_tab.addTab(home_tab.newTab().setText("Tollywood"))
+
+        home_tab.tabGravity= GRAVITY_FILL
+
+
+
+
+            home_tab_viewpager.adapter=myAdapter
+            home_tab_viewpager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(home_tab))
+
+
+            home_tab.addOnTabSelectedListener(object:OnTabSelectedListener{
+                override fun onTabReselected(tab: TabLayout.Tab?) {
+
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+                }
+
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    home_tab_viewpager.currentItem=tab!!.position
+                }
+            })
+    }
+
+
+
+
+
+
+
     private fun initSlider() {
-
-
         lstSlide.add(
             slide(
                 R.drawable.ala2,
@@ -69,38 +115,10 @@ class MainActivity : AppCompatActivity() {
     private fun intiRV_pop_movies() {
 
 
-        val lstMovies=ArrayList<Movie>()
-        lstMovies.add(
-            Movie(
-                "Janatha Garage",
-                R.drawable.anatha,
-                R.drawable.anatha2
-            )
-        )
-        lstMovies.add(
-            Movie(
-                "Geetha Govindham",
-                R.drawable.gee,
-                R.drawable.gee2
-            )
-        )
-        lstMovies.add(
-            Movie(
-                "Ala Vaikuntapuramulo",
-                R.drawable.ala,
-                R.drawable.ala2
-            )
-        )
-        lstMovies.add(
-            Movie(
-                "Srimanthudu",
-                R.drawable.sri,
-                R.drawable.sri2
-            )
-        )
+
 
         rv_movies.adapter=
-            MovieAdapter(this, lstMovies, this)
+            MovieAdapter( dataService.getMoviesList(), this)
         val linearlayout=LinearLayoutManager(this)
         linearlayout.orientation=LinearLayoutManager.HORIZONTAL
         rv_movies.layoutManager=linearlayout
@@ -115,6 +133,7 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("MOV_COVER",coverImage)
         val options=ActivityOptions.makeSceneTransitionAnimation(this,imageview,"sharedName")
         startActivity(intent,options.toBundle())
+
     }
 
 

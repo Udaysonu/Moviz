@@ -5,7 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.moviz.R
+import com.example.moviz.activities.MainActivity
+import com.example.moviz.adapter.MovieAdapter
+import com.example.moviz.classes.dataService
+import kotlinx.android.synthetic.main.fragment_bollywood_fragment.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,6 +30,9 @@ class Bollywood_fragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -34,10 +43,18 @@ class Bollywood_fragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_bollywood_fragment, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        bollywood_frame_rv.adapter=MovieAdapter(dataService.getMoviesList(), MainActivity())
+        val lm=LinearLayoutManager(MainActivity())
+        lm.orientation=LinearLayoutManager.HORIZONTAL
+        bollywood_frame_rv.layoutManager=lm
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of

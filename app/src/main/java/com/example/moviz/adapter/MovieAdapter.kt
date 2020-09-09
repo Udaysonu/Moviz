@@ -13,7 +13,6 @@ import com.example.moviz.R
 import kotlinx.android.synthetic.main.item_movie.view.*
 
 class MovieAdapter(
-    val mcontext: Context,
     val mData:ArrayList<Movie>,
     val movieclicklistener: MainActivity
 ) :

@@ -5,7 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviz.R
+import com.example.moviz.activities.MainActivity
+import com.example.moviz.adapter.MovieAdapter
+import com.example.moviz.classes.dataService
+import kotlinx.android.synthetic.main.fragment_bollywood_fragment.*
+import kotlinx.android.synthetic.main.fragment_tollywood_fragment.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,6 +42,14 @@ class Tollywood_fragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tollywood_fragment, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        tollywood_frame_rv.adapter= MovieAdapter(dataService.getMoviesList(), MainActivity())
+        val lm= LinearLayoutManager(MainActivity())
+        lm.orientation= LinearLayoutManager.HORIZONTAL
+        tollywood_frame_rv.layoutManager=lm
     }
 
     companion object {
