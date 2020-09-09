@@ -1,4 +1,4 @@
-package com.example.moviz
+package com.example.moviz.classes
 
 import kotlin.properties.Delegates
 

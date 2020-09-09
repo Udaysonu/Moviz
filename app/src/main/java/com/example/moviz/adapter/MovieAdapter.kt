@@ -1,15 +1,16 @@
-package com.example.moviz
+package com.example.moviz.adapter
 
 import android.content.Context
 import android.os.Build
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
+import com.example.moviz.activities.MainActivity
+import com.example.moviz.classes.Movie
+import com.example.moviz.R
 import kotlinx.android.synthetic.main.item_movie.view.*
-import kotlin.coroutines.coroutineContext
 
 class MovieAdapter(
     val mcontext: Context,
@@ -28,7 +29,7 @@ class MovieAdapter(
      }
 
     override fun getItemCount(): Int {
-return mData.size
+      return mData.size
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -36,7 +37,7 @@ return mData.size
         holder.itemView.mov_img.setImageResource(mData[position].thumbnail)
         holder.itemView.mov_title.text=mData[position].title
         holder.itemView.setOnClickListener {
-            movieclicklistener.onMovieclick(mData[position].title,mData[position].thumbnail,holder.itemView.mov_img)
+            movieclicklistener.onMovieclick(mData[position].title,mData[position].thumbnail,mData[position].coverPhoto,holder.itemView.mov_img)
         }
     }
 }

@@ -1,13 +1,12 @@
-package com.example.moviz
+package com.example.moviz.adapter
 
 import android.content.Context
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
+import com.example.moviz.R
+import com.example.moviz.classes.slide
 import kotlinx.android.synthetic.main.slide_item.view.*
 
 class slideAdapter(private val mcontext:Context, private val mlstSlides:ArrayList<slide>): PagerAdapter() {
