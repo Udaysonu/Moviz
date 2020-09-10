@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviz.classes.Movie
@@ -13,17 +14,21 @@ import com.example.moviz.R
 import com.example.moviz.adapter.MovieAdapter
 import com.example.moviz.adapter.slideAdapter
 import com.example.moviz.classes.Home_tab_fragment_adapter
-import com.example.moviz.classes.dataService
 import com.example.moviz.classes.slide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.GRAVITY_FILL
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     private var lstSlide=ArrayList<slide>()
+    lateinit var My_Mov_Adapter:MovieAdapter
+    val database by lazy{
+        FirebaseFirestore.getInstance().collection("movies")
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,6 +78,16 @@ class MainActivity : AppCompatActivity() {
                     home_tab_viewpager.currentItem=tab!!.position
                 }
             })
+
+
+
+
+
+
+
+
+
+
     }
 
 
@@ -115,18 +130,32 @@ class MainActivity : AppCompatActivity() {
     private fun intiRV_pop_movies() {
 
 
-
-
-        rv_movies.adapter=
-            MovieAdapter( dataService.getMoviesList(), this)
+        val lstMovies=ArrayList<Movie>()
+        My_Mov_Adapter= MovieAdapter( lstMovies, this)
+        rv_movies.adapter=My_Mov_Adapter
         val linearlayout=LinearLayoutManager(this)
         linearlayout.orientation=LinearLayoutManager.HORIZONTAL
         rv_movies.layoutManager=linearlayout
+        runOnUiThread {
+            database.get().addOnCompleteListener{
+                Toast.makeText(this@MainActivity,"welcome",Toast.LENGTH_LONG).show()
+
+                for(i in it.result!!.documents)
+                {
+                    val mov_detail=i.toObject(Movie::class.java)!!
+                    lstMovies.add(mov_detail)
+                }
+//                Toast.makeText(this,"welcome",Toast.LENGTH_LONG).show()
+                My_Mov_Adapter.notifyDataSetChanged()
+            }
+        }
     }
 
 
+
+
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    fun onMovieclick(titl:String, thumb:Int,coverImage:Int, imageview:ImageView){
+    fun onMovieclick(titl:String, thumb: String, coverImage: String, imageview:ImageView){
         val intent= Intent(this, Movie_details::class.java)
         intent.putExtra("MOV_TITLE",titl)
         intent.putExtra("MOV_THUMB",thumb)
@@ -137,12 +166,5 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    class slider : TimerTask() {
 
-        override fun run() {
-
-
-        }
-
-    }
 }

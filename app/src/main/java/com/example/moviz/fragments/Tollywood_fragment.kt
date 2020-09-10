@@ -5,12 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviz.R
 import com.example.moviz.activities.MainActivity
 import com.example.moviz.adapter.MovieAdapter
+import com.example.moviz.classes.Movie
 import com.example.moviz.classes.dataService
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_bollywood_fragment.*
+import kotlinx.android.synthetic.main.fragment_hollywood_fragment.*
 import kotlinx.android.synthetic.main.fragment_tollywood_fragment.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -28,8 +32,32 @@ class Tollywood_fragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    val database by lazy{
+        FirebaseFirestore.getInstance().collection("tollywood")
+    }
+    val lstMovies=ArrayList<Movie>()
+    lateinit var My_Mov_Adapter:MovieAdapter
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        My_Mov_Adapter= MovieAdapter( lstMovies, requireContext() as MainActivity)
+
+
+        database.get().addOnCompleteListener{
+            Toast.makeText(requireContext(),"welcome", Toast.LENGTH_LONG).show()
+
+            for(i in it.result!!.documents)
+            {
+                val mov_detail=i.toObject(Movie::class.java)!!
+                lstMovies.add(mov_detail)
+            }
+//                Toast.makeText(this,"welcome",Toast.LENGTH_LONG).show()
+            My_Mov_Adapter.notifyDataSetChanged()
+
+        }
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -46,12 +74,12 @@ class Tollywood_fragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tollywood_frame_rv.adapter= MovieAdapter(dataService.getMoviesList(),
-            requireContext() as MainActivity
-        )
-        val lm= LinearLayoutManager(requireContext())
-        lm.orientation= LinearLayoutManager.HORIZONTAL
-        tollywood_frame_rv.layoutManager=lm
+        tollywood_frame_rv.adapter=My_Mov_Adapter
+        val linearlayout=LinearLayoutManager(requireContext())
+        linearlayout.orientation=LinearLayoutManager.HORIZONTAL
+        tollywood_frame_rv.layoutManager=linearlayout
+
+
     }
 
     companion object {
