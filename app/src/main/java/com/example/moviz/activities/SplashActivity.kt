@@ -10,8 +10,8 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-       iv_note.alpha=0f
-        iv_note.animate().setDuration(1500).alpha(1f).withEndAction {
+       lv_note.alpha=0f
+        lv_note.animate().setDuration(3000).alpha(1f).withEndAction {
             startActivity(Intent(this,MainActivity::class.java))
             finish()
             overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)

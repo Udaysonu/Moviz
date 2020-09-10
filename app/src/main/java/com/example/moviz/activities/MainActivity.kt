@@ -34,6 +34,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+
+
+
         //slider setup
         initSlider()
 
@@ -42,6 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         //Init tab view
         initTabView()
+
     }
 
 
@@ -78,15 +83,6 @@ class MainActivity : AppCompatActivity() {
                     home_tab_viewpager.currentItem=tab!!.position
                 }
             })
-
-
-
-
-
-
-
-
-
 
     }
 

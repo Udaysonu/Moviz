@@ -23,9 +23,7 @@
             android:name=".activities.MoviePlayerActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".activities.Movie_details" />
-        <activity android:name=".activities.MainActivity">
-
-        </activity>
-    </application>
+        <activity android:name=".activities.MainActivity"/>
+     </application>
 
 </manifest>

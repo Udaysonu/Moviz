@@ -10,6 +10,7 @@
 
 
    <androidx.constraintlayout.widget.ConstraintLayout
+       android:id="@+id/main_background"
        android:layout_width="match_parent"
        android:layout_height="match_parent">
        <androidx.viewpager.widget.ViewPager
@@ -51,6 +52,7 @@
            android:id="@+id/rv_movies"
            android:layout_width="0dp"
            android:layout_height="wrap_content"
+           android:minHeight="200dp"
            app:layout_constraintEnd_toEndOf="parent"
            app:layout_constraintStart_toStartOf="parent"
            app:layout_constraintTop_toBottomOf="@+id/subtitle_1"
@@ -78,6 +80,9 @@
         app:layout_constraintTop_toBottomOf="@id/home_tab"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
+
+       
+
 
    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
