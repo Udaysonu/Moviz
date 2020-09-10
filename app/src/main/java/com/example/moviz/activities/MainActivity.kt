@@ -155,11 +155,12 @@ class MainActivity : AppCompatActivity() {
 
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    fun onMovieclick(titl:String, thumb: String, coverImage: String, imageview:ImageView){
+    fun onMovieclick(titl:String, thumb: String, coverImage: String,movlink:String, imageview:ImageView){
         val intent= Intent(this, Movie_details::class.java)
         intent.putExtra("MOV_TITLE",titl)
         intent.putExtra("MOV_THUMB",thumb)
         intent.putExtra("MOV_COVER",coverImage)
+        intent.putExtra("MOV_LINK",movlink)
         val options=ActivityOptions.makeSceneTransitionAnimation(this,imageview,"sharedName")
         startActivity(intent,options.toBundle())
 

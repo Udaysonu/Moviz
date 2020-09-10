@@ -25,6 +25,7 @@ class Movie_details : AppCompatActivity() {
         val mov_title=intent.getStringExtra("MOV_TITLE")
         val mov_thumb=intent.getStringExtra("MOV_THUMB")
         val mov_coverPhoto=intent.getStringExtra("MOV_COVER")
+        val mov_stream_link=intent.getStringExtra("MOV_LINK")
         supportActionBar?.title=mov_title
         mov_detail_title.text=mov_title
 
@@ -40,7 +41,9 @@ class Movie_details : AppCompatActivity() {
             R.anim.scale_animation
         )
         mov_detail_fab.setOnClickListener{
-            startActivity(Intent(this,MoviePlayerActivity::class.java))
+            val intent=Intent(this,MoviePlayerActivity::class.java)
+            intent.putExtra("MOV_LINK",mov_stream_link)
+            startActivity(intent)
         }
 
         inflateCastRV()

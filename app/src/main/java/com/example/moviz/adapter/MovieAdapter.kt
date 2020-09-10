@@ -38,7 +38,7 @@ class MovieAdapter(
         holder.itemView.setOnClickListener {
         val check=movieclicklistener
             if(check!=null)
-            {            movieclicklistener.onMovieclick(mData[position].title,mData[position].thumbnail,mData[position].coverPhoto,holder.itemView.mov_img)
+            {            movieclicklistener.onMovieclick(mData[position].title,mData[position].thumbnail,mData[position].coverPhoto,mData[position].streamLink,holder.itemView.mov_img)
             }
 
     }}

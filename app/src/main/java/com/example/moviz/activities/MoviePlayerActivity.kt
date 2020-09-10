@@ -23,7 +23,8 @@ class MoviePlayerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_player)
         supportActionBar?.hide()
-        initExoPlayer();
+        val streamlink=intent.getStringExtra("MOV_LINK")
+        initExoPlayer(streamlink);
 
     }
 
@@ -33,7 +34,7 @@ class MoviePlayerActivity : AppCompatActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
     }
 
-    private fun initExoPlayer() {
+    private fun initExoPlayer(streamlink:String) {
 
         // available in exoplayer documenentation
         simpleExoPlayer=ExoPlayerFactory.newSimpleInstance(this);
@@ -41,7 +42,7 @@ class MoviePlayerActivity : AppCompatActivity() {
         val dataSourceFactory=DefaultDataSourceFactory(this,
             Util.getUserAgent(this,"appname"))
         val videosoure=ExtractorMediaSource.Factory(dataSourceFactory)
-            .createMediaSource(Uri.parse("http://www.jiorockers.ws/files/Hindi%20Movies%20Download/Hindi%202020%20Movies/Khuda%20Haafiz%20(2020)%20Hindi%20HDRip%20-%20E%20Sub/Khuda%20Haafiz%20Hindi%20HDRip%20Single%20Part/Khuda%20Haafiz%20(2020)%20Hindi%20HDRip%20Single%20Part%20-%20E%20Sub.mp4"))
+            .createMediaSource(Uri.parse(streamlink))
         simpleExoPlayer.prepare(videosoure)
         simpleExoPlayer.playWhenReady=true
     }
