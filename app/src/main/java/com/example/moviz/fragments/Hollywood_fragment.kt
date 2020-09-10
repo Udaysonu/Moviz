@@ -46,8 +46,10 @@ class Hollywood_fragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        hollywood_frame_rv.adapter= MovieAdapter(dataService.getMoviesList(), MainActivity())
-        val lm= LinearLayoutManager(MainActivity())
+        hollywood_frame_rv.adapter= MovieAdapter(dataService.getMoviesList(),
+            requireContext() as MainActivity
+        )
+        val lm= LinearLayoutManager(requireContext())
         lm.orientation= LinearLayoutManager.HORIZONTAL
         hollywood_frame_rv.layoutManager=lm
     }

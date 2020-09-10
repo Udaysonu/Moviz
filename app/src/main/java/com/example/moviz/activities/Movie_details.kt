@@ -1,5 +1,6 @@
 package com.example.moviz.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.animation.AnimationUtils
@@ -34,6 +35,9 @@ class Movie_details : AppCompatActivity() {
         mov_detail_fab.animation=AnimationUtils.loadAnimation(this,
             R.anim.scale_animation
         )
+        mov_detail_fab.setOnClickListener{
+            startActivity(Intent(this,MoviePlayerActivity::class.java))
+        }
 
         inflateCastRV()
     }

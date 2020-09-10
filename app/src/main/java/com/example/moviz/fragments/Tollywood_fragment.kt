@@ -46,8 +46,10 @@ class Tollywood_fragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tollywood_frame_rv.adapter= MovieAdapter(dataService.getMoviesList(), MainActivity())
-        val lm= LinearLayoutManager(MainActivity())
+        tollywood_frame_rv.adapter= MovieAdapter(dataService.getMoviesList(),
+            requireContext() as MainActivity
+        )
+        val lm= LinearLayoutManager(requireContext())
         lm.orientation= LinearLayoutManager.HORIZONTAL
         tollywood_frame_rv.layoutManager=lm
     }

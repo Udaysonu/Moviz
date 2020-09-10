@@ -1,9 +1,21 @@
 package com.example.moviz.classes
 
 import com.example.moviz.R
+import com.google.firebase.database.FirebaseDatabase
 
 class dataService{
 companion object{
+    val db by lazy{
+        FirebaseDatabase.getInstance().reference
+    }
+
+    fun getFireMoviesList():ArrayList<Movie>{
+        val lstMovies=ArrayList<Movie>()
+        db.child("Movies")
+        return lstMovies
+    }
+
+
     fun getMoviesList():ArrayList<Movie>{
         val lstMovies=ArrayList<Movie>()
         lstMovies.add(
