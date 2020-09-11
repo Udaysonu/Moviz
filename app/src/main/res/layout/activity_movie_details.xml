@@ -23,7 +23,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="284dp"
+        android:layout_height="100dp"
         app:layout_constraintBottom_toBottomOf="@+id/mov_detail_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

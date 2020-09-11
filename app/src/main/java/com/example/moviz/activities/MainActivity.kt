@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.transition.Slide
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -20,16 +21,18 @@ import com.google.android.material.tabs.TabLayout.GRAVITY_FILL
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
-    private var lstSlide=ArrayList<slide>()
     lateinit var My_Mov_Adapter:MovieAdapter
     val database by lazy{
-        FirebaseFirestore.getInstance().collection("movies")
+        FirebaseFirestore.getInstance()
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -92,34 +95,48 @@ class MainActivity : AppCompatActivity() {
 
 
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun initSlider() {
-        lstSlide.add(
-            slide(
-                R.drawable.ala2,
-                "Ala Vaikuntapuramulo"
-            )
-        )
-        lstSlide.add(
-            slide(
-                R.drawable.sri,
-                "Srimanthudu"
-            )
-        )
-        lstSlide.add(
-            slide(
-                R.drawable.gee,
-                "Geetha Govindham"
-            )
-        )
-        lstSlide.add(
-            slide(
-                R.drawable.anatha,
-                "Janatha Garage"
-            )
-        )
+//        lstSlide.add(
+//            slide(
+//                R.drawable.ala2,
+//                "Ala Vaikuntapuramulo"
+//            )
+//        )
+//        lstSlide.add(
+//            slide(
+//                R.drawable.sri,
+//                "Srimanthudu"
+//            )
+//        )
+//        lstSlide.add(
+//            slide(
+//                R.drawable.gee,
+//                "Geetha Govindham"
+//            )
+//        )
+//        lstSlide.add(
+//            slide(
+//                R.drawable.anatha,
+//                "Janatha Garage"
+//            )
+//        )
+        var lstSlide=ArrayList<slide>()
+
         var adaptr= slideAdapter(this, lstSlide)
         viewpager.adapter=adaptr
         indicator.setupWithViewPager(viewpager,true)
+
+        with(Dispatchers.IO){
+            database.collection("slider").get().addOnCompleteListener {
+                for(i in it.result!!.documents)
+                {
+                    val slider_details=i.toObject(slide::class.java)!!
+                    lstSlide.add(slider_details)
+                }
+                runOnUiThread { adaptr.notifyDataSetChanged() }
+            }
+        }
 
     }
 
@@ -132,8 +149,8 @@ class MainActivity : AppCompatActivity() {
         val linearlayout=LinearLayoutManager(this)
         linearlayout.orientation=LinearLayoutManager.HORIZONTAL
         rv_movies.layoutManager=linearlayout
-        runOnUiThread {
-            database.get().addOnCompleteListener{
+        with(Dispatchers.IO) {
+            database.collection("movies").get().addOnCompleteListener{
                 Toast.makeText(this@MainActivity,"welcome",Toast.LENGTH_LONG).show()
 
                 for(i in it.result!!.documents)
@@ -142,7 +159,7 @@ class MainActivity : AppCompatActivity() {
                     lstMovies.add(mov_detail)
                 }
 //                Toast.makeText(this,"welcome",Toast.LENGTH_LONG).show()
-                My_Mov_Adapter.notifyDataSetChanged()
+                runOnUiThread {  My_Mov_Adapter.notifyDataSetChanged() }
             }
         }
     }
@@ -159,7 +176,6 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("MOV_LINK",movlink)
         val options=ActivityOptions.makeSceneTransitionAnimation(this,imageview,"sharedName")
         startActivity(intent,options.toBundle())
-
     }
 
 
