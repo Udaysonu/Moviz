@@ -30,8 +30,8 @@ class Movie_details : AppCompatActivity() {
         mov_detail_title.text=mov_title
 
 
-            Picasso.get().load(mov_coverPhoto).into(mov_detail_back)
-            Picasso.get().load(mov_thumb).into(mov_detail_img)
+            Picasso.get().load(mov_coverPhoto).placeholder(R.drawable.coverphoto).error(R.drawable.coverphoto).into(mov_detail_back)
+            Picasso.get().load(mov_thumb).placeholder(R.drawable.mov_back).error(R.drawable.mov_back).into(mov_detail_img)
 
         mov_detail_back.animation=AnimationUtils.loadAnimation(this,
             R.anim.scale_animation
@@ -51,7 +51,7 @@ class Movie_details : AppCompatActivity() {
 
     private fun inflateCastRV() {
         val lstcast=ArrayList<Cast>()
-        lstcast.add(Cast("NTR",R.drawable.anatha2))
+        lstcast.add(Cast("NTR",R.drawable.anatha))
         lstcast.add(Cast("ALLU Arjun",R.drawable.ala))
         lstcast.add(Cast("Vijay",R.drawable.gee))
         lstcast.add(Cast("Mahesh",R.drawable.sri))

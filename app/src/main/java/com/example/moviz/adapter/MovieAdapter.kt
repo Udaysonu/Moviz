@@ -33,7 +33,7 @@ class MovieAdapter(
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        Picasso.get().load(mData[position].thumbnail).into(holder.itemView.mov_img)
+        Picasso.get().load(mData[position].thumbnail).placeholder(R.drawable.mov_back).error(R.drawable.mov_back).into(holder.itemView.mov_img)
         holder.itemView.mov_title.text=mData[position].title
         holder.itemView.setOnClickListener {
         val check=movieclicklistener
