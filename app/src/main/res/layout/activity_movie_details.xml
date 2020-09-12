@@ -48,9 +48,12 @@
         android:id="@+id/mov_detail_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:textStyle="bold"
+        android:text="Movie Name Here"
+
+        android:textSize="30dp"
         android:layout_margin="20dp"
-        android:textColor="#00FF00"
+        android:textColor="#FFC107"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/mov_detail_img"
         app:layout_constraintTop_toBottomOf="@+id/mov_detail_back" />
@@ -59,17 +62,14 @@
         android:id="@+id/mov_detail_deptn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="TextViewTextViewTextViewTextViewTex
-        tViewTextViewTextViewTextViewTextViewText
-        ViewTextViewTextViewTeTextViewTextViewTextViewTextViewTextView
-        TextViewTextViewTextViewTextViewTextViewTextViewTextView
-        vTextViewTextViewTextViewTextViewTextView
-        TextViewTextViewTextViewTextViewTextView
-        TextViewTextViewTextViewTextViewTextViewTextView
-        xtViewTextViewTextViewTextViewTextView"
-        android:textColor="#FFFFFF"
+        android:text="This is the movie description,movie is done and directed well by our beloved narendram bahubali
+are you sure that you are watching this movie"
+        android:textSize="20dp"
+        android:fontFamily="sans-serif"
+
         android:layout_margin="16dp"
         android:lineSpacingExtra="8dp"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/mov_detail_img" />
