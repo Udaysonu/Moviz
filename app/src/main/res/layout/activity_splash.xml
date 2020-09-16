@@ -7,7 +7,14 @@
     android:layout_height="match_parent"
     android:id="@+id/lv_note"
     tools:context=".activities.SplashActivity">
-
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:indeterminateTint="#FFFFFF"/>
 
     <ImageView
         android:id="@+id/imageView"
@@ -28,7 +35,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="400dp"
         android:text="MoviZ"
         android:textColor="#FDFFF6"
         android:textSize="50dp"

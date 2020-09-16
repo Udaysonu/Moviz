@@ -1,12 +1,15 @@
 package com.example.moviz.activities
 
 import android.app.ActivityOptions
+import android.app.AlertDialog
 import android.content.Intent
+import android.media.MediaCodec.MetricsConstants.ROTATION
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.transition.Slide
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -86,6 +89,7 @@ class MainActivity : AppCompatActivity() {
                     home_tab_viewpager.currentItem=tab!!.position
                 }
             })
+
 
     }
 
