@@ -3,9 +3,11 @@ package com.example.moviz.activities
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import com.example.moviz.R
+import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.ExtractorMediaSource
@@ -38,12 +40,25 @@ class MoviePlayerActivity : AppCompatActivity() {
 
         // available in exoplayer documenentation
         simpleExoPlayer=ExoPlayerFactory.newSimpleInstance(this);
+        simpleExoPlayer.addListener(object:ExoPlayer.EventListener{
+            override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
+                super.onPlayerStateChanged(playWhenReady, playbackState)
+                if(playbackState==ExoPlayer.STATE_BUFFERING)
+                {
+                  video_loading.visibility= View.VISIBLE
+                }
+                else{
+                    video_loading.visibility=View.INVISIBLE
+                }
+            }
+        })
         movie_exo_player.player=simpleExoPlayer
         val dataSourceFactory=DefaultDataSourceFactory(this,
             Util.getUserAgent(this,"appname"))
         val videosoure=ExtractorMediaSource.Factory(dataSourceFactory)
             .createMediaSource(Uri.parse(streamlink))
         simpleExoPlayer.prepare(videosoure)
+
         simpleExoPlayer.playWhenReady=true
     }
 
