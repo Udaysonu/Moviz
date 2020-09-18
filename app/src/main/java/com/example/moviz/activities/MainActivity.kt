@@ -30,6 +30,7 @@ import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     lateinit var My_Mov_Adapter:MovieAdapter
+    lateinit var loadingDIalog:AlertDialog;
     val database by lazy{
         FirebaseFirestore.getInstance()
     }
@@ -40,6 +41,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+       loadingDIalog= AlertDialog.Builder(this)
+           .setTitle("Loading")
+           .setMessage("Please Wait")
+           .setCancelable(false)
+           .show()
 
 
 
@@ -52,6 +58,7 @@ class MainActivity : AppCompatActivity() {
 
         //Init tab view
         initTabView()
+
 
     }
 
@@ -89,8 +96,6 @@ class MainActivity : AppCompatActivity() {
                     home_tab_viewpager.currentItem=tab!!.position
                 }
             })
-
-
     }
 
 
@@ -156,7 +161,7 @@ class MainActivity : AppCompatActivity() {
         with(Dispatchers.IO) {
             database.collection("movies").get().addOnCompleteListener{
                 Toast.makeText(this@MainActivity,"welcome",Toast.LENGTH_LONG).show()
-
+                loadingDIalog.dismiss()
                 for(i in it.result!!.documents)
                 {
                     val mov_detail=i.toObject(Movie::class.java)!!

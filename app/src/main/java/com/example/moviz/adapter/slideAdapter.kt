@@ -27,6 +27,7 @@ class slideAdapter(private val mcontext:Context, private val mlstSlides:ArrayLis
         var inflater= mcontext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         var slideLayout=inflater.inflate(R.layout.slide_item,null)
 //        slideLayout.slide_img.setImageResource(mlstSlides[position].image)
+        
         Picasso.get().load(mlstSlides[position].image).placeholder(R.drawable.slider).error(R.drawable.slider).into(slideLayout.slide_img)
         slideLayout.slide_text.text=mlstSlides[position].title
         container.addView(slideLayout)
