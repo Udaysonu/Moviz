@@ -2,6 +2,7 @@ package com.example.moviz.activities
 
 import android.app.ActivityOptions
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.media.MediaCodec.MetricsConstants.ROTATION
 import android.os.Build
@@ -11,6 +12,7 @@ import android.transition.Slide
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.annotation.MainThread
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviz.classes.Movie
@@ -26,14 +28,17 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.util.*
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     lateinit var My_Mov_Adapter:MovieAdapter
     lateinit var loadingDIalog:AlertDialog;
+
     val database by lazy{
         FirebaseFirestore.getInstance()
     }
+    val lstSlide=ArrayList<slide>();
 
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -47,18 +52,32 @@ class MainActivity : AppCompatActivity() {
            .setCancelable(false)
            .show()
 
-
-
-
         //slider setup
         initSlider()
 
         //more popular movies RecyclerView setup
         intiRV_pop_movies()
-
         //Init tab view
         initTabView()
 
+        val timer= Timer();
+        timer.scheduleAtFixedRate(SliderTimer(),4000,4000);
+
+    }
+
+    inner class SliderTimer : TimerTask() {
+        override fun run() {
+             runOnUiThread {
+                 if(viewpager.currentItem<lstSlide.size-1)
+                 {
+                     viewpager.currentItem=viewpager.currentItem+1;
+                 }
+                 else
+                 {
+                     viewpager.currentItem=0;
+                 }
+             }
+        }
 
     }
 
@@ -106,38 +125,14 @@ class MainActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun initSlider() {
-//        lstSlide.add(
-//            slide(
-//                R.drawable.ala2,
-//                "Ala Vaikuntapuramulo"
-//            )
-//        )
-//        lstSlide.add(
-//            slide(
-//                R.drawable.sri,
-//                "Srimanthudu"
-//            )
-//        )
-//        lstSlide.add(
-//            slide(
-//                R.drawable.gee,
-//                "Geetha Govindham"
-//            )
-//        )
-//        lstSlide.add(
-//            slide(
-//                R.drawable.anatha,
-//                "Janatha Garage"
-//            )
-//        )
-        var lstSlide=ArrayList<slide>()
+        indicator.setupWithViewPager(viewpager,true)
 
         var adaptr= slideAdapter(this, lstSlide)
         viewpager.adapter=adaptr
-        indicator.setupWithViewPager(viewpager,true)
 
         with(Dispatchers.IO){
             database.collection("slider").get().addOnCompleteListener {
+
                 for(i in it.result!!.documents)
                 {
                     val slider_details=i.toObject(slide::class.java)!!
@@ -185,8 +180,12 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("MOV_LINK",movlink)
         val options=ActivityOptions.makeSceneTransitionAnimation(this,imageview,"sharedName")
         startActivity(intent,options.toBundle())
+
+
     }
 
 
 
+
 }
+

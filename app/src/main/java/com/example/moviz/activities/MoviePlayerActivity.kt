@@ -28,11 +28,12 @@ class MoviePlayerActivity : AppCompatActivity() {
         val streamlink=intent.getStringExtra("MOV_LINK")
         initExoPlayer(streamlink);
 
+
     }
 
     private fun setFullScreen() {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
     }
 
@@ -45,12 +46,18 @@ class MoviePlayerActivity : AppCompatActivity() {
                 super.onPlayerStateChanged(playWhenReady, playbackState)
                 if(playbackState==ExoPlayer.STATE_BUFFERING)
                 {
-                  video_loading.visibility= View.VISIBLE
+                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+
+                    video_loading.visibility= View.VISIBLE
                 }
-                else{
+                else
+                {
+                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
                     video_loading.visibility=View.INVISIBLE
                 }
             }
+
+
         })
         movie_exo_player.player=simpleExoPlayer
         val dataSourceFactory=DefaultDataSourceFactory(this,
@@ -61,8 +68,7 @@ class MoviePlayerActivity : AppCompatActivity() {
 
         simpleExoPlayer.playWhenReady=true
     }
-
-    override fun onDestroy() {
+     override fun onDestroy() {
         super.onDestroy()
         simpleExoPlayer.release()
     }
