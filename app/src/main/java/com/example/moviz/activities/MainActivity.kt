@@ -1,5 +1,6 @@
 package com.example.moviz.activities
 
+import android.app.ActionBar
 import android.app.ActivityOptions
 import android.app.AlertDialog
 import android.content.Context
@@ -9,6 +10,10 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.transition.Slide
+import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -45,6 +50,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        //setting actionbar title to center
+
 
        loadingDIalog= AlertDialog.Builder(this)
            .setTitle("Loading")
@@ -185,7 +194,25 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater=menuInflater
 
+        inflater.inflate(R.menu.menu_bar,menu)
+        return true;
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId)
+        {
+            R.id.movie_request->{
+                startActivity(Intent(this,RequestMovieActivity::class.java))
+                return true;
+            }
+
+        }
+        return super.onOptionsItemSelected(item)
+
+    }
 
 }
 

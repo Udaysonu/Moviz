@@ -28,8 +28,6 @@ class Movie_details : AppCompatActivity() {
         val mov_stream_link=intent.getStringExtra("MOV_LINK")
         supportActionBar?.title=mov_title
         mov_detail_title.text=mov_title
-
-
             Picasso.get().load(mov_coverPhoto).placeholder(R.drawable.coverphoto).error(R.drawable.coverphoto).into(mov_detail_back)
             Picasso.get().load(mov_thumb).placeholder(R.drawable.mov_back).error(R.drawable.mov_back).into(mov_detail_img)
 

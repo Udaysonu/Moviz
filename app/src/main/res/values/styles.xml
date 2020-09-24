@@ -7,6 +7,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColor">#B0BEC5</item>
         <item name="fontFamily">@font/comic</item>
+
     </style>
 
 <!--    splash theme-->
