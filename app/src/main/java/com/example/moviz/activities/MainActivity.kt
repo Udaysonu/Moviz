@@ -164,7 +164,6 @@ class MainActivity : AppCompatActivity() {
         rv_movies.layoutManager=linearlayout
         with(Dispatchers.IO) {
             database.collection("movies").get().addOnCompleteListener{
-                Toast.makeText(this@MainActivity,"welcome",Toast.LENGTH_LONG).show()
                 loadingDIalog.dismiss()
                 for(i in it.result!!.documents)
                 {
