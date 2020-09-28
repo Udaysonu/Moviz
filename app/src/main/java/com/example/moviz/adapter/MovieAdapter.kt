@@ -13,6 +13,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_movie.view.*
 
 class MovieAdapter(
+
     val mData:ArrayList<Movie>,
     val movieclicklistener: MainActivity
 ) :

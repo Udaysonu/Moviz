@@ -42,7 +42,6 @@ class Bollywood_fragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         database.get().addOnCompleteListener{
-            Toast.makeText(requireContext(),"welcome",Toast.LENGTH_LONG).show()
 
             for(i in it.result!!.documents)
             {

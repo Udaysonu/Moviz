@@ -40,7 +40,6 @@ class Hollywood_fragment : Fragment() {
        My_Mov_Adapter= MovieAdapter( lstMovies, requireContext() as MainActivity)
 
         database.get().addOnCompleteListener{
-            Toast.makeText(requireContext(),"welcome", Toast.LENGTH_LONG).show()
 
             for(i in it.result!!.documents)
             {

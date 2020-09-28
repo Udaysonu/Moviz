@@ -47,7 +47,6 @@ class Tollywood_fragment : Fragment() {
 
 
         database.get().addOnCompleteListener{
-            Toast.makeText(requireContext(),"welcome", Toast.LENGTH_LONG).show()
 
             for(i in it.result!!.documents)
             {

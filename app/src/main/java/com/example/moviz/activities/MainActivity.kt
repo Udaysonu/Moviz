@@ -37,12 +37,18 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
+
     lateinit var My_Mov_Adapter:MovieAdapter
+
+    // this is for displaying " loading please wait" when our app is fetching information from Firebase.Database;
     lateinit var loadingDIalog:AlertDialog;
 
+    // constant to hold FirebaseDatabase
     val database by lazy{
         FirebaseFirestore.getInstance()
     }
+
+    // Array to store all the slides details that are displayed in slider ...
     val lstSlide=ArrayList<slide>();
 
 
@@ -51,11 +57,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-        //setting actionbar title to center
-
-
-       loadingDIalog= AlertDialog.Builder(this)
+        // this displays a dialog box telling " loading please wait "  while our app is fetching information from Firebasedatabase;
+        // we are using "loadingDialog" so that after our data loaded we are going to dismiss it
+        // "loadingDialog" is dismissed in another function (intiRV_pop_movies)
+        loadingDIalog= AlertDialog.Builder(this)
            .setTitle("Loading")
            .setMessage("Please Wait")
            .setCancelable(false)
@@ -66,14 +71,17 @@ class MainActivity : AppCompatActivity() {
 
         //more popular movies RecyclerView setup
         intiRV_pop_movies()
+
         //Init tab view
         initTabView()
 
+        // this timer object helps in running a function after each interval
         val timer= Timer();
         timer.scheduleAtFixedRate(SliderTimer(),4000,4000);
 
     }
 
+    // This funciton is used to swap the slides
     inner class SliderTimer : TimerTask() {
         override fun run() {
              runOnUiThread {
@@ -94,9 +102,10 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
+    // this function initializes tab view in our mainActivity.
     private fun initTabView() {
         // home_tab.setupWithViewPager(home_tab_viewpager)
+
         val myAdapter=Home_tab_fragment_adapter(this,supportFragmentManager)
         home_tab.addTab(home_tab.newTab().setText("Hollywood"))
         home_tab.addTab(home_tab.newTab().setText("Bollywood"))
@@ -110,7 +119,7 @@ class MainActivity : AppCompatActivity() {
             home_tab_viewpager.adapter=myAdapter
             home_tab_viewpager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(home_tab))
 
-
+            // when ever a tab is selected the viewpager is filled with corresponding fragment
             home_tab.addOnTabSelectedListener(object:OnTabSelectedListener{
                 override fun onTabReselected(tab: TabLayout.Tab?) {
 
@@ -121,6 +130,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onTabSelected(tab: TabLayout.Tab?) {
+                    // viewpager is filled with corresponding fragment
                     home_tab_viewpager.currentItem=tab!!.position
                 }
             })
@@ -131,7 +141,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
+    // this function initializes the slider in our mainActivity
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun initSlider() {
         indicator.setupWithViewPager(viewpager,true)
@@ -147,21 +157,28 @@ class MainActivity : AppCompatActivity() {
                     val slider_details=i.toObject(slide::class.java)!!
                     lstSlide.add(slider_details)
                 }
+                // this runonUithread is necessary because UI related operation cannot be done on IO thread
                 runOnUiThread { adaptr.notifyDataSetChanged() }
             }
         }
 
     }
 
+
+    // this funciton fills popular movies row with movies
     private fun intiRV_pop_movies() {
 
 
         val lstMovies=ArrayList<Movie>()
+
         My_Mov_Adapter= MovieAdapter( lstMovies, this)
+
         rv_movies.adapter=My_Mov_Adapter
         val linearlayout=LinearLayoutManager(this)
         linearlayout.orientation=LinearLayoutManager.HORIZONTAL
         rv_movies.layoutManager=linearlayout
+
+
         with(Dispatchers.IO) {
             database.collection("movies").get().addOnCompleteListener{
                 loadingDIalog.dismiss()
@@ -171,6 +188,8 @@ class MainActivity : AppCompatActivity() {
                     lstMovies.add(mov_detail)
                 }
 //                Toast.makeText(this,"welcome",Toast.LENGTH_LONG).show()
+                // this runonUithread is necessary because UI related operation cannot be done on IO thread
+
                 runOnUiThread {  My_Mov_Adapter.notifyDataSetChanged() }
             }
         }
@@ -178,7 +197,8 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
+// this function is the extension of the MovieAdapter
+// when on a particular movie is clicked we are opening the movie details with it
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     fun onMovieclick(titl:String, thumb: String, coverImage: String,movlink:String, imageview:ImageView){
         val intent= Intent(this, Movie_details::class.java)
@@ -192,7 +212,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
+    // App menu bar
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater=menuInflater
 
@@ -200,6 +220,7 @@ class MainActivity : AppCompatActivity() {
         return true;
     }
 
+    // on particular option of menu is selected open corresponding intent
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId)
         {
