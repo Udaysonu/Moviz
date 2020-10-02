@@ -13,7 +13,6 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_movie.view.*
 
 class MovieAdapter(
-
     val mData:ArrayList<Movie>,
     val movieclicklistener: MainActivity
 ) :
@@ -24,6 +23,7 @@ class MovieAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
+        // inflating a our view and keeping it in ViewHolder
     val view=LayoutInflater.from(parent.context).inflate(R.layout.item_movie,parent,false)
         return MovieViewHolder(view)
      }
@@ -34,9 +34,12 @@ class MovieAdapter(
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+        //once viewholder is binded we have to change our data to what ever we want
         Picasso.get().load(mData[position].thumbnail).placeholder(R.drawable.mov_back).error(R.drawable.mov_back).into(holder.itemView.mov_img)
         holder.itemView.mov_title.text=mData[position].title
         holder.itemView.setOnClickListener {
+
+            // if movie is clicked then we have to envoke the function movieclicklistener which is in main activity and pass data to it.
         val check=movieclicklistener
             if(check!=null)
             {            movieclicklistener.onMovieclick(mData[position].title,mData[position].thumbnail,mData[position].coverPhoto,mData[position].streamLink,holder.itemView.mov_img)
